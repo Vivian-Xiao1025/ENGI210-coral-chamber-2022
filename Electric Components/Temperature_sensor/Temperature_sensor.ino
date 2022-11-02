@@ -2,11 +2,13 @@
 #include <DallasTemperature.h>
 
 #define ONE_WIRE_BUS 11 
+#define HEATER_PIN 2
 
 //declaring the constants for the sensor 
 const int ENA_A_PIN = 7; 
 const int IN1_PIN = 5; 
 const int IN2_PIN = 6; 
+const int HEAT_PIN = 2;
 
 // code: https://create.arduino.cc/projecthub/iotboys/how-to-use-ds18b20-water-proof-temperature-sensor-2adecc 
 // schematics: https://arduinogetstarted.com/tutorials/arduino-temperature-sensor 
@@ -28,6 +30,7 @@ void setup(void) {
   pinMode(ENA_A_PIN, OUTPUT); 
   pinMode(IN1_PIN, OUTPUT); 
   pinMode(IN2_PIN, OUTPUT); 
+  pinMode(HEAT_PIN, OUTPUT);
 } 
 
 void loop(void) { 
@@ -46,4 +49,12 @@ void loop(void) {
   digitalWrite(IN1_PIN, LOW); 
   digitalWrite(IN2_PIN, HIGH); 
   digitalWrite(ENA_A_PIN, 250); 
+
+  // heater control
+  if (Celcius < 24) {
+    digitalWrite(HEAT_PIN, HIGH);
+  }
+  else if (Celcius > 25){
+    digitalWrite(HEAT_PIN, LOW);
+  }
 }
