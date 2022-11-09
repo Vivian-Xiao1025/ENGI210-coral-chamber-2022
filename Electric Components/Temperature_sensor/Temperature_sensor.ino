@@ -5,7 +5,7 @@
 #define HEATER_PIN 2
 
 //declaring the constants for the sensor 
-const int ENA_A_PIN = 7; 
+const int ENA_A_PIN = 3; 
 const int IN1_PIN = 5; 
 const int IN2_PIN = 6; 
 const int HEAT_PIN = 2;
@@ -48,7 +48,7 @@ void loop(void) {
   // driving the pump 
   digitalWrite(IN1_PIN, LOW); 
   digitalWrite(IN2_PIN, HIGH); 
-  digitalWrite(ENA_A_PIN, 250); 
+  analogWrite(ENA_A_PIN, 5); 
 
   // heater control
   if (Celcius < 24) {
