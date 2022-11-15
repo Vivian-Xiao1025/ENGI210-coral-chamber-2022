@@ -10,15 +10,12 @@
 #define HEATER_PIN 2
 hd44780_I2Cexp lcd; // declare lcd object: auto locate & auto config expander chip
 
-//declaring the constants for the sensor 
+//declaring the constants for the pump
 const int ENA_A_PIN = 3; 
 const int IN1_PIN = 5; 
 const int IN2_PIN = 6; 
 //declaring the constants for the heater
-const int HEAT_PIN = 2;
-const int ENA_B_PIN = 10; 
-const int IN3_PIN = 8; 
-const int IN4_PIN = 9; 
+const int RELAY_PIN = A2;
 // LCD geometry
 const int LCD_COLS = 16;
 const int LCD_ROWS = 2;
@@ -37,7 +34,8 @@ float Fahrenheit=0;
 void setup(void) { 
   // LCD status
   int status;
-
+ // initialize digital pin A2 as an output.
+  pinMode(RELAY_PIN, OUTPUT);
   Serial.begin(9600); 
 
   //starts the sensor 
@@ -47,21 +45,15 @@ void setup(void) {
   pinMode(ENA_A_PIN, OUTPUT); 
   pinMode(IN1_PIN, OUTPUT); 
   pinMode(IN2_PIN, OUTPUT); 
-  pinMode(HEAT_PIN, OUTPUT);
-
-  //declaring the state of the pins for the heater 
-  pinMode(ENA_B_PIN, OUTPUT); 
-  pinMode(IN3_PIN, OUTPUT); 
-  pinMode(IN4_PIN, OUTPUT); 
 
   // LCD
   status = lcd.begin(LCD_COLS, LCD_ROWS);
-	if(status) // non zero status means it was unsuccesful
-	{
-		// hd44780 has a fatalError() routine that blinks an led if possible
-		// begin() failed so blink error code using the onboard LED if possible
-		hd44780::fatalError(status); // does not return
-	}
+  if(status) // non zero status means it was unsuccesful
+  {
+    //hd44780 has a fatalError() routine that blinks an led if possible
+    //begin() //failed so blink error code using the onboard LED if possible
+    hd44780::fatalError(status); // does not return
+  }
 } 
 
 void loop(void) { 
@@ -81,33 +73,25 @@ void loop(void) {
   digitalWrite(IN2_PIN, HIGH); 
   analogWrite(ENA_A_PIN, 4); 
 
-  // // driving the heater
-  // digitalWrite(IN3_PIN, LOW); 
-  // digitalWrite(IN4_PIN, HIGH); 
-  // analogWrite(ENA_B_PIN, 250); 
-
   // heater control
   if (Celcius < 24.5) {
-    digitalWrite(IN3_PIN, LOW); 
-    digitalWrite(IN4_PIN, HIGH); 
-    analogWrite(ENA_B_PIN, 250); 
+    digitalWrite(RELAY_PIN, HIGH);
     lcd.setCursor(9, 1);
     lcd.print("ON");    
   }
   else if (Celcius > 25){
-    digitalWrite(IN3_PIN, LOW); 
-    digitalWrite(IN4_PIN, LOW); 
+    digitalWrite(RELAY_PIN, LOW);
     lcd.setCursor(9, 1);
     lcd.print("OFF");
   }
 
-	// Print a message to the LCD
+  //Print a message to the LCD
   lcd.setCursor(0, 0);
   lcd.print(Celcius);
   lcd.print((char)223);
   lcd.print("C");
   lcd.setCursor(0, 1);
-	lcd.print(Fahrenheit);
+  lcd.print(Fahrenheit);
   lcd.print((char)223);
   lcd.print("F");
   lcd.setCursor(9, 0);
