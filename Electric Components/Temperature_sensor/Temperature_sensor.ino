@@ -71,7 +71,7 @@ void loop(void) {
   // driving the pump 
   digitalWrite(IN1_PIN, LOW); 
   digitalWrite(IN2_PIN, HIGH); 
-  analogWrite(ENA_A_PIN, 4); 
+  analogWrite(ENA_A_PIN, 7); 
 
   // heater control
   if (Celcius < 24.5) {
