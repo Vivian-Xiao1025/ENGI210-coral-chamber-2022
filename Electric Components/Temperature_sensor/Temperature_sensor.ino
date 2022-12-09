@@ -169,18 +169,18 @@ void loop(void) {
   // analogWrite(ENA_A_PIN, 250); 
 
   // heater control
-  // if (Celcius < 24.5) {
-  //   // turns off
-  //   digitalWrite(RELAY_PIN, HIGH);
-  //   lcd.setCursor(9, 1);
-  //   lcd.print("ON ");    
-  // }
-  // else if (Celcius > 25){
-  //   // turns on
-  //   digitalWrite(RELAY_PIN, LOW);
-  //   lcd.setCursor(9, 1);
-  //   lcd.print("OFF");
-  // }
+  if (Celcius < 24.5) {
+    // turns off
+    digitalWrite(RELAY_PIN, HIGH);
+    lcd.setCursor(9, 1);
+    lcd.print("ON ");    
+  }
+  else if (Celcius > 25){
+    // turns on
+    digitalWrite(RELAY_PIN, LOW);
+    lcd.setCursor(9, 1);
+    lcd.print("OFF");
+  }
 
   if (Minute%10 == 0 || Minute%10 == 5) {
     lcd.setCursor(0, 0);

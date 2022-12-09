@@ -31,7 +31,7 @@ void save_temperature() {
     Serial.println("stored: " + String(Celcius) + " C " + String(Fahrenheit) + " F");
   } else {
     // if the file didn't open, print an error:
-    Serial.println("error opening test.txt");
+    Serial.println("error opening temp.txt");
   }
 
 }
